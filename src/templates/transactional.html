@@ -1,0 +1,54 @@
+---
+title: "Test email"
+---
+
+<extends src="src/layouts/main.html">
+  <block name="template">
+    <table class="w-full font-sans">
+      <tr>
+        <td align="center" class="bg-slate-50">
+          <table class="w-150 sm:w-full">
+            <tr>
+              <td class="p-12 text-center sm:py-8 sm:px-6">
+                <a href="https://maizzle.com" class="text-4xl font-bold text-indigo-900 no-underline">
+                  Company
+                </a>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="p-12 text-base leading-6 text-left bg-white rounded shadow-sm sm:px-6 text-slate-700">
+                <p class="m-0 mb-6 text-2xl font-semibold text-black sm:leading-8">
+                  This is a title
+                </p>
+                <p class="m-0 mb-6">
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+                </p>
+                <div class="leading-full">
+                  <a
+                    href="https://example.com"
+                    class="inline-block py-3.5 px-4 rounded text-base font-semibold text-center [text-decoration:none] text-white bg-indigo-700 hover:bg-indigo-500"
+                  >
+                    <span class="mso-text-raise-4">Button</span>
+                  </a>
+                </div>
+              </td>
+            </tr>
+
+            <tr role="separator">
+              <td class="h-12"></td>
+            </tr>
+
+            <tr>
+              <td class="px-6 text-xs text-center text-slate-600">
+                <p class="m-0 mb-4">
+                  Footer
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </block>
+</extends>
