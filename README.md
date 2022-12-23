@@ -30,12 +30,14 @@
 **Setup**
 
 - `npm install` (Install NPM dependencies)
+- Set `MAILJET_PUBLIC_KEY` and `MAILJET_PRIVATE_KEY` in [`.env`](`.env`) ([Mailjet](https://www.mailjet.com))
 
 **Commands**
 
 - `npm run dev` (Start local development)
 - `npx ts-node server.ts` (Start mail rendering server, http://localhost:3000)
-  - For example: http://localhost:3000?name=Flo
+  - Render and show email example: http://localhost:3000?name=Flo
+  - Render and send email example: http://localhost:3000/send/flo@drakery.com?name=Flo
 
 # Codebase
 
