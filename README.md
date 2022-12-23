@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Rendering Emails with Maizzle</h1>
-  <p>Example for rendering beautiful emails with dynamic content using TailwindCSS and Maizzle</p>
+  <p>Example for rendering beautiful emails with dynamic content using TailwindCSS</p>
   <!-- <a href="https://youtu.be/1WUoITRINf0">
     <img width="320px" height="180px" src="https://img.youtube.com/vi/1WUoITRINf0/mqdefault.jpg" style="border-radius: 1rem;" />
     <p>Watch the YouTube Tutorial</p>
@@ -20,21 +20,21 @@
   - [PostHTML](https://posthtml.org)
 - [Node.js](https://nodejs.org)
 - [TypeScript](https://www.typescriptlang.org)
-- [Docker](https://www.docker.com)
 
 # Usage
 
 **Recommended OS**: Linux
 
-**Requirements**: Node.js, Docker, Docker Compose
+**Requirements**: Node.js
 
 **Setup**
 
 - `npm install` (Install NPM dependencies)
 
-**Development**
+**Commands**
 
 - `npm run dev` (Start local development)
+- `npx ts-node server.ts` (Start mail rendering server, http://localhost:3000)
 
 # Codebase
 

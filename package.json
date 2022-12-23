@@ -5,6 +5,18 @@
     "build": "maizzle build production"
   },
   "dependencies": {
-    "@maizzle/framework": "^4.3.1"
+    "@maizzle/framework": "^4.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.15",
+    "prettier": "^2.8.1",
+    "ts-node": "^10.9.1"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "semi": false,
+    "printWidth": 110
   }
 }
