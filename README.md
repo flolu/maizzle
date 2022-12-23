@@ -35,6 +35,7 @@
 
 - `npm run dev` (Start local development)
 - `npx ts-node server.ts` (Start mail rendering server, http://localhost:3000)
+  - For example: http://localhost:3000?name=Flo
 
 # Codebase
 
