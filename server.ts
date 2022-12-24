@@ -11,7 +11,7 @@ async function renderEmail(template: string) {
     tailwind: {
       config: require('./tailwind.config.js'),
     },
-    maizzle: require('./config.js'),
+    maizzle: require('./config.production.js'),
   })
 
   return html

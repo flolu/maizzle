@@ -8,4 +8,5 @@ module.exports = {
   },
   inlineCSS: true,
   removeUnusedCSS: true,
+  minify: true,
 }
