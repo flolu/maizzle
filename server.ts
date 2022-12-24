@@ -21,10 +21,10 @@ async function renderEmail(templateName: string) {
   return html
 }
 
-async function customizeEmail(name: string) {
+async function customizeEmail(name: string, url: string) {
   const html = await renderEmail('transactional.html')
 
-  const view = {name, title: `Test mail to ${name}`}
+  const view = {name, title: `Test mail to ${name}`, url}
   const customized = Mustache.render(html, view)
 
   return customized
@@ -54,16 +54,16 @@ async function main() {
 
   const app = express()
   app.get('/', async (req, res) => {
-    const {name} = req.query
-    const html = await customizeEmail(name as string)
+    const {name, url} = req.query
+    const html = await customizeEmail(name as string, url as string)
 
     res.type('html')
     res.send(html)
   })
 
   app.get('/send/:email', async (req, res) => {
-    const {name} = req.query
-    const html = await customizeEmail(name as string)
+    const {name, url} = req.query
+    const html = await customizeEmail(name as string, url as string)
 
     const {email} = req.params
     await sendEmail(html, email, 'Maizzle Test Email')
@@ -71,7 +71,7 @@ async function main() {
     res.send(`Successfully sent email to ${email}`)
   })
 
-  app.listen(8080, () => console.log('http://localhost:8080?name=Flo'))
+  app.listen(8080, () => console.log('http://localhost:8080?name=Flo&url=https://youtube.com/@flolu'))
 }
 
 main()
