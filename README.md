@@ -35,9 +35,9 @@
 **Commands**
 
 - `npm run dev` (Start local development)
-- `npx ts-node server.ts` (Start mail rendering server, http://localhost:3000)
-  - Render and show email example: http://localhost:3000?name=Flo
-  - Render and send email example: http://localhost:3000/send/flo@drakery.com?name=Flo
+- `npx ts-node-dev server.ts` (Start mail rendering server, http://localhost:8080)
+  - Render and show email example: http://localhost:8080?name=Flo
+  - Render and send email example: http://localhost:8080/send/flo@drakery.com?name=Flo
 
 # Codebase
 

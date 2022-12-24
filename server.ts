@@ -1,13 +1,17 @@
-import express from 'express'
-import path from 'path'
-import * as fs from 'fs/promises'
 const Maizzle = require('@maizzle/framework')
-import Mustache from 'mustache'
-import dotenv from 'dotenv'
 import Mailjet from 'node-mailjet'
+import * as fs from 'fs/promises'
+import Mustache from 'mustache'
+import express from 'express'
+import dotenv from 'dotenv'
+import path from 'path'
 
-async function renderEmail(template: string) {
-  const {html} = await Maizzle.render(template, {
+async function renderEmail(templateName: string) {
+  const templatesDir = path.join(__dirname, 'src', 'templates')
+  const templatePath = path.join(templatesDir, templateName)
+  const rawTemplate = (await fs.readFile(templatePath)).toString()
+
+  const {html} = await Maizzle.render(rawTemplate, {
     tailwind: {
       config: require('./tailwind.config.js'),
     },
@@ -17,47 +21,57 @@ async function renderEmail(template: string) {
   return html
 }
 
-dotenv.config()
+async function customizeEmail(name: string) {
+  const html = await renderEmail('transactional.html')
 
-const app = express()
-const mailjet = new Mailjet({
-  apiKey: process.env.MAILJET_PUBLIC_KEY,
-  apiSecret: process.env.MAILJET_PRIVATE_KEY,
-})
+  const view = {name, title: `Test mail to ${name}`}
+  const customized = Mustache.render(html, view)
 
-const templatesDir = path.join(__dirname, 'src', 'templates')
+  return customized
+}
 
-app.get('/', async (req, res) => {
-  const templatePath = path.join(templatesDir, 'transactional.html')
-  const rawTemplate = (await fs.readFile(templatePath)).toString()
-  const templated = Mustache.render(rawTemplate, {name: req.query.name})
-
-  const html = await renderEmail(templated)
-
-  res.type('html')
-  res.send(html)
-})
-
-app.get('/send/:email', async (req, res) => {
-  const templatePath = path.join(templatesDir, 'transactional.html')
-  const rawTemplate = (await fs.readFile(templatePath)).toString()
-  const templated = Mustache.render(rawTemplate, {name: req.query.name})
-
-  const html = await renderEmail(templated)
+async function sendEmail(html: string, to: string, subject: string) {
+  const mailjet = new Mailjet({
+    apiKey: process.env.MAILJET_PUBLIC_KEY,
+    apiSecret: process.env.MAILJET_PRIVATE_KEY,
+  })
 
   await mailjet.post('send', {version: 'v3.1'}).request({
     Messages: [
       {
         From: {Email: process.env.FROM_EMAIL, Name: 'Maizzle'},
-        To: [{Email: req.params.email}],
-        Subject: 'Maizzle Test Email',
+        To: [{Email: to}],
+        Subject: subject,
         TextPart: html,
         HTMLPart: html,
       },
     ],
   })
+}
 
-  res.send(`Successfully sent email to ${req.params.email}`)
-})
+async function main() {
+  dotenv.config()
 
-app.listen(3000)
+  const app = express()
+  app.get('/', async (req, res) => {
+    const {name} = req.query
+    const html = await customizeEmail(name as string)
+
+    res.type('html')
+    res.send(html)
+  })
+
+  app.get('/send/:email', async (req, res) => {
+    const {name} = req.query
+    const html = await customizeEmail(name as string)
+
+    const {email} = req.params
+    await sendEmail(html, email, 'Maizzle Test Email')
+
+    res.send(`Successfully sent email to ${email}`)
+  })
+
+  app.listen(8080, () => console.log('http://localhost:8080?name=Flo'))
+}
+
+main()
